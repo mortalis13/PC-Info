@@ -1,0 +1,13 @@
+
+-- get formats
+youtube-dl -F <URL>
+
+-- download a format
+youtube-dl -f <format> <URL>
+
+-- restrict format
+youtube-dl -f "best[width<=1280]" <URL>
+youtube-dl -f "[filesize<=50M]" <URL>
+
+-- download mp3
+youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 <URL>

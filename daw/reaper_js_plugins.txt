@@ -1,0 +1,8 @@
+Goniometer
+Channel Polarity Control
+(Phase invert for left/right channels)
+Audio Statistics
+Channel Phase Meter
+(in phase / out of phase)
+Phase Rotator
+(change phase)

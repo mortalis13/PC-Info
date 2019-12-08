@@ -1,0 +1,9 @@
+- install python
+- install scdl (https://github.com/flyingrub/scdl)
+pip install scdl
+
+- download all
+scdl -l [URL] -a
+
+- download track or a playlist
+scdl -l [URL]

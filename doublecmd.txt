@@ -1,0 +1,11 @@
+Command Line argumetns
+
+doublecmd.exe [-T] [-P L|R] [path1\subpath1] [path2\subpath2]
+doublecmd.exe [-T] [-P L|R] [-L path1\subpath1] [-R path2\subpath2] 
+
+Parameters: 
+  Path\SubPath Loads the first directory passed to Double Commander into the left panel, and the second into the right panel. Directory names containing spaces must be put in double quotes. Always specify the full path name. 
+  -L Set path in left panel 
+  -R Set path in right panel 
+  -P Sets the active panel at program start: -P L left, -P R right 
+  -T Opens the passed dir(s) in new tab(s) 

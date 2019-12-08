@@ -1,0 +1,2 @@
+wget -o site.log -i list.txt -P site_folder -c -nc -r -l 5 -k --no-check-certificate URL
+wget --output-file=site.log --output-document file.mp3 --input-file=list.txt --continue --directory-prefix=site_folder --no-clobber --recursive --level 5 --convert-links --no-check-certificate URL

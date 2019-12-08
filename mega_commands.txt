@@ -1,0 +1,1 @@
+megals -u MAIL -p PASS > mega_list.txt

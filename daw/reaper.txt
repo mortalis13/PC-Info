@@ -1,0 +1,24 @@
+== add time signature change
+- set cursor at the beginning of a beat
+- Shift+C or Insert -> Time signature/tempo change marker
+- add another marker after the beat(s) to restore time signature
+
+== inline midi editor
+- E (item context -> open in -> inline editor)
+
+== continue to autoscroll after loosing focus
+- '
+
+== pause
+- Enter
+
+== increase octave
+- Alt + Num8
+
+== start/stop metronome at markers
+- create 2 markers with name '!40364'
+(corresponds to 'Options: Toggle metronome' with ID 40364)
+
+== focus edit area (arrange)
+- SWS: Focus arrange (F3)
+(focuses items area, useful to delete items when a track is focused)

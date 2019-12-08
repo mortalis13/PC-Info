@@ -1,0 +1,1 @@
+c:\Program Files (x86)\Steinberg\VstPlugIns;c:\Program Files\Steinberg\VstPlugIns;C:\Program Files\Common Files\Steinberg\VST2;C:\Program Files\Common Files\VST3;C:\Program Files (x86)\Common Files\Steinberg\VST2;C:\Program Files (x86)\Common Files\VST3;c:\Program Files\MusicLab\RealLPC 4;e:\VST\x86;e:\VST\x64;

@@ -1,0 +1,28 @@
+== Windows 10 ==
+
+-- PowerShell (Admin)
+-- Apps are in: c:\Program Files\WindowsApps
+
+Get-AppxPackage -AllUsers -Name *DisneyMagicKingdoms* | Remove-AppxPackage
+Get-AppxPackage -AllUsers -Name *Microsoft.Windows.Photos* | Remove-AppxPackage
+Get-AppxPackage -AllUsers -Name *CandyCrushSodaSaga* | Remove-AppxPackage
+Get-AppxPackage -AllUsers -Name *MicrosoftOfficeHub* | Remove-AppxPackage
+Get-AppxPackage -AllUsers -Name *Office.OneNote* | Remove-AppxPackage
+Get-AppxPackage -AllUsers -Name *SkypeApp* | Remove-AppxPackage
+Get-AppxPackage -AllUsers -Name *AutodeskSketchBook* | Remove-AppxPackage
+Get-AppxPackage -AllUsers -Name *MicrosoftSolitaireCollection* | Remove-AppxPackage
+Get-AppxPackage -AllUsers -Name *ZuneMusic* | Remove-AppxPackage
+Get-AppxPackage -AllUsers -Name *Microsoft.Windows.Photos* | Remove-AppxPackage
+Get-AppxPackage -AllUsers -Name *Microsoft.ZuneVideo* | Remove-AppxPackage
+Get-AppxPackage -AllUsers -Name *Microsoft.XboxApp* | Remove-AppxPackage
+Get-AppxPackage -AllUsers -Name *microsoft.windowscommunicationsapps* | Remove-AppxPackage
+
+
+-- Show all apps
+Get-AppxPackage -AllUsers
+
+
+-- Some apps can be removed from the Administrator account
+-- Can be enabled/disabled with these commands:
+net user administrator /active:yes
+net user administrator /active:no
