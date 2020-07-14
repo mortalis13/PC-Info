@@ -1,23 +1,25 @@
+=== Video
+
+-- convert video
+fm -hide_banner -i "input.mkv" -c:v libx264 -crf 26 -bf 2 -vf yadif=0:0:0 -c:a libmp3lame -b:a 128k "output.mp4"
+
 -- 0.5 size
-fm -hide_banner -y -i "from.mkv" -vf scale=iw*.5:ih*.5 -c:v libx264 -crf 26 -c:a copy "to.mp4"
+fm -hide_banner -y -i "input.mkv" -vf scale=iw*.5:ih*.5 -c:v libx264 -crf 26 -c:a copy "output.mp4"
 
 -- custom size with aspect ratio
-fm -hide_banner -y -i "from.mkv" -vf scale=1280:-1 -c:v libx264 -crf 26 -c:a copy "to.mp4"
+fm -hide_banner -y -i "input.mkv" -vf scale=1280:-1 -c:v libx264 -crf 26 -c:a copy "output.mp4"
 
 -- cut from time to end
-fm -hide_banner -y -ss 00:10:28 -i "from.mkv" -c copy "to.mkv"
+fm -hide_banner -y -ss 00:10:28 -i "input.mkv" -c copy "output.mkv"
 
 -- cut first n time
-fm -hide_banner -y -t 00:00:10 -i "from.mkv" -c copy "to.mkv"
+fm -hide_banner -y -t 00:00:10 -i "input.mkv" -c copy "output.mkv"
 
 -- cut from time with duration (end position with -to didn't work)
-fm -hide_banner -y -ss 00:00:00 -t 00:10:13 -i "from.mp4" -c copy "to.mp4"
+fm -hide_banner -y -ss 00:00:00 -t 00:10:13 -i "input.mp4" -c copy "output.mp4"
 
 -- cut video with re-encoding (when keyframes don't let to cut exact seconds.milliseconds)
 fm -hide_banner -y -ss 3.600 -i "input.mp4" -t 00:02:25 -c:v libx264 -crf 30 -c:a copy "output.mp4"
-
--- change volume
-fm -hide_banner -y -i "input.wav" -filter:a "volume=1.5" "output.wav"
 
 -- extract audio
 fm -hide_banner -y -i "input.mp4" -c:a libmp3lame -b:a 128k "output.mp3"
@@ -30,3 +32,44 @@ fm -hide_banner -y -i "input.mp4" -itsoffset 0.17 -i "input.mp4" -map 0:v -map 1
 
 -- extract video and an audio stream
 fm -hide_banner -y -i "input.mp4" -map 0:0 -map 0:4 -c copy "output.mp4"
+
+-- normalize audio
+fm -hide_banner -y -i "input.mp4" -map 0 -filter:a loudnorm -c:a libmp3lame -b:a 128k -c:v copy "output.mp4"
+
+-- crop video
+fm -hide_banner -y -i "input.mp4" -c:v libx264 -crf 9 -filter:v "crop=x=0:y=234:w=in_w:h=620" -c:a copy "output.mp4"
+
+-- dvd-rip
+fm -hide_banner -y -i "concat:VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB" -c:v libx264 -crf 24 -bf 2 -vf yadif=0:0:0 -g 300 -map 0:1 -map 0:2 -map 0:3 -c:a copy "output.mp4"
+
+-- embed subtitles
+fm -hide_banner -y -i "input.mp4" -vf subtitles=subs.srt:force_style='FontName=Arial,FontSize=16,Bold=-1,BackColour=^&H22111111,Shadow=1' -c:v libx264 -crf 20 -c:a copy "output.mp4"
+
+-- convert image and audio to video
+fm -hide_banner -y -loop 1 -i input.png -i input.mp3 -c:a copy -c:v libx264 -tune stillimage -pix_fmt yuv420p -shortest output.mp4
+
+
+=== Audio
+
+-- change volume
+fm -hide_banner -y -i "input.wav" -filter:a "volume=1.5" "output.wav"
+
+-- convert audio
+fm -hide_banner -y -i "input.flac" -c:a libmp3lame -b:a 320k -ar 44100 -map_metadata 0 -id3v2_version 3 "output.mp3"
+
+-- concat audio files
+fm -hide_banner -y -i concat:"input1.mp3|input2.mp3" -codec copy "output.mp3"
+
+-- merge stereo and mono (mix 0-left+1 -> 0-left and 0-right+1 -> 0-right)
+fm -hide_banner -y -i "stereo.mp3" -i "mono.mp3" -filter_complex "[0:a][1:a]amerge=inputs=2[a]" -map "[a]" -ac 2 -c:a libmp3lame -b:a 320k -ar 44100 "output.mp3"
+fm -hide_banner -y -i "stereo.mp3" -i "mono.mp3" -filter_complex "[0:a][1:a]amerge=inputs=2,pan=stereo|c0=c0+c2|c1=c1+c2[a]" -map "[a]" -c:a libmp3lame -b:a 320k -ar 44100 "output.mp3"
+
+-- merge 2 stereo files (mix 0-left+1-left -> 0-left and 0-right+1-right -> 0-right)
+fm -hide_banner -y -i "stereo.mp3" -i "stereo.mp3" -filter_complex "[0:a][1:a]amerge=inputs=2[a]" -map "[a]" -ac 2 -c:a libmp3lame -b:a 320k -ar 44100 "output.mp3"
+fm -hide_banner -y -i "stereo.mp3" -i "stereo.mp3" -filter_complex "[0:a][1:a]amerge=inputs=2,pan=stereo|c0=c0+c2|c1=c1+c3[a]" -map "[a]" -c:a libmp3lame -b:a 320k -ar 44100 "output.mp3"
+
+-- convert 4 channel to 2 channel
+fm -hide_banner -y -i "input.mp3" -af "pan=stereo|c0<c0+c2|c1<c1+c3" -c:a libmp3lame -b:a 320k -ar 44100 "output.mp3"
+
+-- apply multiple filters
+fm -hide_banner -y -i "input.mp3" -af "pan=stereo|c0<c0+c2|c1<c1+c3,volume=2.0" -c:a libmp3lame -b:a 320k -ar 44100 "output.mp3"

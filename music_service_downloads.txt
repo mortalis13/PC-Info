@@ -1,0 +1,24 @@
+== SoundCloud
+
+- install python
+- install scdl (https://github.com/flyingrub/scdl)
+pip install scdl
+
+- download all
+scdl -l [URL] -a
+
+- download track or a playlist
+scdl -l [URL]
+
+
+== Deezer
+
+pip install deemix
+deemix [URL]
+
+
+== Spotify
+
+pip3 install spotdl
+spotdl --song https://open.spotify.com/track/
+spotdl --album https://open.spotify.com/album/
