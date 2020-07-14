@@ -1,0 +1,5 @@
+== Photoshop
+- drag/drop not working
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
+EnableLUA -> 0
+restart

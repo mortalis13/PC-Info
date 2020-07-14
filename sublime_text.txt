@@ -1,0 +1,9 @@
+-- open directory from command line
+subl [dir_path]
+
+-- run a command
+subl --command "[command] {\"arg\": \"val\"}"
+
+
+-- open Terminus in tab specifying the working directory
+subl --command "terminus_open {\"cwd\": \"d:\"}"
