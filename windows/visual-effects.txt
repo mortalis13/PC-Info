@@ -1,0 +1,10 @@
+HKEY_CURRENT_USER\Control Panel\Desktop
+
+FontSmoothing
+0 = Disable
+2 = Enable
+
+
+DragFullWindows
+0 = Show outline
+1 = Show contents
