@@ -1,0 +1,19 @@
+== Unicode characters after the Latin and Cyrillic code points
+
+꞉
+꞊
+ⵉ
+ⵌ
+ⵐ
+ⵑ
+ⵠ
+ⵝ
+ⵙ
+ⴵ
+ⴷ
+ⴺ
+ᛨ
+ᛩ
+ᚱ
+ᐒ
+ଽ
