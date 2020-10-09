@@ -1,0 +1,10 @@
+
+--Enable unsigned addons
+
+xpinstall.whitelist.required
+false
+
+
+--Disable domain highlighting in URL bar
+browser.urlbar.formatting.enabled
+false
