@@ -1,7 +1,10 @@
 === Video
 
 -- convert video
-fm -hide_banner -i "input.mkv" -c:v libx264 -crf 26 -bf 2 -vf yadif=0:0:0 -c:a libmp3lame -b:a 128k "output.mp4"
+fm -hide_banner -i "input.mkv" -c:v libx264 -crf 26 -bf 2 -map 0 -c:a copy "output.mp4"
+
+-- deinterlace
+fm -hide_banner -i "input.mkv" -vf yadif=0:0:0 -c:a copy "output.mp4"
 
 -- 0.5 size
 fm -hide_banner -y -i "input.mkv" -vf scale=iw*.5:ih*.5 -c:v libx264 -crf 26 -c:a copy "output.mp4"
@@ -46,7 +49,10 @@ fm -hide_banner -y -i "concat:VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB" -c:v libx2
 fm -hide_banner -y -i "input.mp4" -vf subtitles=subs.srt:force_style='FontName=Arial,FontSize=16,Bold=-1,BackColour=^&H22111111,Shadow=1' -c:v libx264 -crf 20 -c:a copy "output.mp4"
 
 -- convert image and audio to video
-fm -hide_banner -y -loop 1 -i input.png -i input.mp3 -c:a copy -c:v libx264 -tune stillimage -pix_fmt yuv420p -shortest output.mp4
+fm -hide_banner -y -loop 1 -i "input.png" -i "input.mp3" -c:a copy -c:v libx264 -tune stillimage -pix_fmt yuv420p -shortest output.mp4
+
+-- advanced conversion params
+fm -hide_banner -y -i "input.mkv" -c:v libx264 -crf 24 -refs 7 -bf 7 -me_range 24 -me_method umh -subq 9 -map 0 -c:a copy "output.mkv"
 
 
 === Audio
