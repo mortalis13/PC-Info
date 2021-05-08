@@ -1,10 +1,11 @@
-
 --Enable unsigned addons
-
 xpinstall.whitelist.required
 false
-
 
 --Disable domain highlighting in URL bar
 browser.urlbar.formatting.enabled
 false
+
+--Disable updates
+copy 'distribution' folder to the Firefox installation directory,
+the policies.json file sets the 'DisableAppUpdate' to true

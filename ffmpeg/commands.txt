@@ -1,5 +1,5 @@
-=== Video
-
+[Video]
+==================
 -- convert video
 fm -hide_banner -i "input.mkv" -c:v libx264 -crf 26 -bf 2 -map 0 -c:a copy "output.mp4"
 
@@ -45,6 +45,9 @@ fm -hide_banner -y -i "input.mp4" -c:v libx264 -crf 9 -filter:v "crop=x=0:y=234:
 -- dvd-rip
 fm -hide_banner -y -i "concat:VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB" -c:v libx264 -crf 24 -bf 2 -vf yadif=0:0:0 -g 300 -map 0:1 -map 0:2 -map 0:3 -c:a copy "output.mp4"
 
+-- bluray-rip
+ff -playlist 3 -i bluray:"bluray_dir" -c:v libx264 -crf 24 -refs 7 -bf 7 -me_range 24 -me_method umh -subq 9 -c:a copy "output.mkv"
+
 -- embed subtitles
 fm -hide_banner -y -i "input.mp4" -vf subtitles=subs.srt:force_style='FontName=Arial,FontSize=16,Bold=-1,BackColour=^&H22111111,Shadow=1' -c:v libx264 -crf 20 -c:a copy "output.mp4"
 
@@ -55,8 +58,8 @@ fm -hide_banner -y -loop 1 -i "input.png" -i "input.mp3" -c:a copy -c:v libx264 
 fm -hide_banner -y -i "input.mkv" -c:v libx264 -crf 24 -refs 7 -bf 7 -me_range 24 -me_method umh -subq 9 -map 0 -c:a copy "output.mkv"
 
 
-=== Audio
-
+[Audio]
+==================
 -- change volume
 fm -hide_banner -y -i "input.wav" -filter:a "volume=1.5" "output.wav"
 
@@ -75,7 +78,7 @@ fm -hide_banner -y -i "stereo.mp3" -i "stereo.mp3" -filter_complex "[0:a][1:a]am
 fm -hide_banner -y -i "stereo.mp3" -i "stereo.mp3" -filter_complex "[0:a][1:a]amerge=inputs=2,pan=stereo|c0=c0+c2|c1=c1+c3[a]" -map "[a]" -c:a libmp3lame -b:a 320k -ar 44100 "output.mp3"
 
 -- convert 4 channel to 2 channel
-fm -hide_banner -y -i "input.mp3" -af "pan=stereo|c0<c0+c2|c1<c1+c3" -c:a libmp3lame -b:a 320k -ar 44100 "output.mp3"
-
--- apply multiple filters
 fm -hide_banner -y -i "input.mp3" -af "pan=stereo|c0<c0+c2|c1<c1+c3,volume=2.0" -c:a libmp3lame -b:a 320k -ar 44100 "output.mp3"
+
+-- split 5.1 audio to separate files
+ffmpeg -i "input.ac3" -filter_complex "channelsplit=channel_layout=5.1[FL][FR][FC][LFE][BL][BR]" -c:a libmp3lame -b:a 128k -map "[FL]" out_front_left.mp3 -map "[FR]" out_front_right.mp3 -map "[FC]" out_front_center.mp3 -map "[LFE]" out_lfe.mp3 -map "[BL]" out_back_left.mp3 -map "[BR]" out_back_right.mp3
