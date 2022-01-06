@@ -60,11 +60,11 @@ fm -hide_banner -y -i "input.mkv" -c:v libx264 -crf 24 -refs 7 -bf 7 -me_range 2
 
 [Audio]
 ==================
--- change volume
-fm -hide_banner -y -i "input.wav" -filter:a "volume=1.5" "output.wav"
-
 -- convert audio
 fm -hide_banner -y -i "input.flac" -c:a libmp3lame -b:a 320k -ar 44100 -map_metadata 0 -id3v2_version 3 "output.mp3"
+
+-- change volume
+fm -hide_banner -y -i "input.wav" -filter:a "volume=1.5" -c:a libmp3lame -b:a 320k -ar 44100 -map_metadata 0 -id3v2_version 3 "output.wav"
 
 -- concat audio files
 fm -hide_banner -y -i concat:"input1.mp3|input2.mp3" -codec copy "output.mp3"
