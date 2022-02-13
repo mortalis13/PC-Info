@@ -22,3 +22,6 @@
 == focus edit area (arrange)
 - SWS: Focus arrange (F3)
 (focuses items area, useful to delete items when a track is focused)
+
+== move env points horizontally
+Ctrl+Shift
