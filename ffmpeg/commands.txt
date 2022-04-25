@@ -26,6 +26,7 @@ fm -hide_banner -y -ss 3.600 -i "input.mp4" -t 00:02:25 -c:v libx264 -crf 30 -c:
 
 -- extract audio
 fm -hide_banner -y -i "input.mp4" -c:a libmp3lame -b:a 128k "output.mp3"
+fm -hide_banner -y -i "input.mp4" -c:a libmp3lame -q:a 0 "output.mp3"
 
 -- add audio stream
 fm -hide_banner -y -i "input.mp4" -i "audio.mp3" -map 0 -map 1 -c copy "output.mp4"
