@@ -58,6 +58,9 @@ fm -hide_banner -y -loop 1 -i "input.png" -i "input.mp3" -c:a copy -c:v libx264 
 -- advanced conversion params
 fm -hide_banner -y -i "input.mkv" -c:v libx264 -crf 24 -refs 7 -bf 7 -me_range 24 -me_method umh -subq 9 -map 0 -c:a copy "output.mkv"
 
+-- extract all frames as images
+fm -hide_banner -y -i "input.mp4" "output_%04d.png"
+
 
 [Audio]
 ==================
