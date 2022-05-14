@@ -12,3 +12,8 @@ youtube-dl -f "[filesize<=50M]" <URL>
 -- download mp3
 youtube-dl --extract-audio --audio-format mp3 --audio-quality 0 <URL>
 youtube-dl --extract-audio --audio-format mp3 --audio-quality 320K <URL>
+
+-- download with ffmpeg
+youtube-dl -F <URL> (choose a format)
+youtube-dl -f <format> -g <URL> (copy the direct url)
+ffmpeg -i <direct_url> -c copy <output>
