@@ -1,7 +1,7 @@
 [Video]
 ==================
 -- convert video
-fm -hide_banner -i "input.mkv" -c:v libx264 -crf 26 -bf 2 -map 0 -c:a copy "output.mp4"
+fm -hide_banner -i "input.mkv" -c:v libx264 -crf 26 -force_key_frames source -map 0 -c:a copy "output.mp4"
 
 -- deinterlace
 fm -hide_banner -i "input.mkv" -vf yadif=0:0:0 -c:a copy "output.mp4"
@@ -86,3 +86,13 @@ fm -hide_banner -y -i "input.mp3" -af "pan=stereo|c0<c0+c2|c1<c1+c3,volume=2.0" 
 
 -- split 5.1 audio to separate files
 ffmpeg -i "input.ac3" -filter_complex "channelsplit=channel_layout=5.1[FL][FR][FC][LFE][BL][BR]" -c:a libmp3lame -b:a 128k -map "[FL]" out_front_left.mp3 -map "[FR]" out_front_right.mp3 -map "[FC]" out_front_center.mp3 -map "[LFE]" out_lfe.mp3 -map "[BL]" out_back_left.mp3 -map "[BR]" out_back_right.mp3
+
+-- stream sine wave
+ffmpeg -re -f lavfi -i aevalsrc="sin(400*2*PI*t)" -ar 8000 -f mulaw -f rtp rtp://127.0.0.1:1234
+
+-- stream file
+ffmpeg -re -i audio.mp3 -c copy -f rtp rtp://127.0.0.1:1234
+ffplay rtp://127.0.0.1:1234
+
+-- create raw PCM file
+ffmpeg -i input.mp3 -f s16le -c:a pcm_s16le output.raw
