@@ -96,3 +96,6 @@ ffplay rtp://127.0.0.1:1234
 
 -- create raw PCM file
 ffmpeg -i input.mp3 -f s16le -c:a pcm_s16le output.raw
+
+-- get waveform
+ffmpeg -hide_banner -y -i input.mp3 -lavfi showwavespic=size=1080x200:colors=white waveform.png
