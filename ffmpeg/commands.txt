@@ -44,7 +44,7 @@ fm -hide_banner -y -i "input.mp4" -map 0 -filter:a loudnorm -c:a libmp3lame -b:a
 fm -hide_banner -y -i "input.mp4" -c:v libx264 -crf 9 -filter:v "crop=x=0:y=234:w=in_w:h=620" -c:a copy "output.mp4"
 
 -- dvd-rip
-fm -hide_banner -y -i "concat:VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB" -c:v libx264 -crf 24 -bf 2 -vf yadif=0:0:0 -g 300 -map 0:1 -map 0:2 -map 0:3 -c:a copy "output.mp4"
+fm -hide_banner -y -i "concat:VTS_01_1.VOB|VTS_01_2.VOB|VTS_01_3.VOB" -c:v libx264 -crf 24 -bf 2 -vf yadif=0:0:0 -g 300 -map 0:1 -map 0:2 -map 0:3 -c:a copy "../output.mp4"
 
 -- bluray-rip
 ff -playlist 3 -i bluray:"bluray_dir" -c:v libx264 -crf 24 -refs 7 -bf 7 -me_range 24 -me_method umh -subq 9 -c:a copy "output.mkv"

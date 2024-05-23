@@ -1,0 +1,19 @@
+When PC goes to Sleep, after wakeup, the lock screen and then login button are shown.
+To automatically login to a personal account without password:
+
+Disable lock screen
+- gpedit.msc
+- Computer Configuration
+    Administrative Templates
+      Control Panel
+        Personalization
+          Do not display the lock screen - Enabled
+
+Disable password requirement
+- gpedit.msc
+- Computer Configuration
+    Administrative Templates
+      System
+        Power Management
+          Sleep Settings 
+            Require a password when a computer wakes (plugged in)/(on battery) - Disabled
