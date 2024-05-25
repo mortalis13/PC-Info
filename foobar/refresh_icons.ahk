@@ -1,0 +1,1 @@
+DllCall("Shell32\SHChangeNotify", "UInt", 0x08000000, "UInt", 0, "UIntP", 0, "UIntP", 0)

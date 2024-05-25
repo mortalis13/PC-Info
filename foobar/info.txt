@@ -1,0 +1,23 @@
+-- Install / uninstall silently
+
+foobar_installer.exe /S /D=%cd%
+uninstall.exe /S
+
+
+-- Associate file type icons
+
+The portable version doesn't modify registry, so it doesn't create file associations.
+To associate manually file icons, run the registry file, foobar_file_icons.reg
+and execute the AutoHotkey v2 script refresh_icons.ahk, or sign out to make OS to assign new icons.
+
+Also, this C# code can be executed from PowerShell to do the same Win32 API call
+
+$code = @'
+  [System.Runtime.InteropServices.DllImport("Shell32.dll")] 
+  private static extern int SHChangeNotify(int eventId, int flags, IntPtr item1, IntPtr item2);
+  public static void Refresh()  {
+      SHChangeNotify(0x8000000, 0x1000, IntPtr.Zero, IntPtr.Zero);    
+  }
+'@
+Add-Type -MemberDefinition $code -Namespace WinAPI -Name Explorer 
+[WinAPI.Explorer]::Refresh()
