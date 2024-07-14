@@ -99,3 +99,5 @@ ffmpeg -i input.mp3 -f s16le -c:a pcm_s16le output.raw
 
 -- get waveform
 ffmpeg -hide_banner -y -i input.mp3 -lavfi showwavespic=size=1080x200:colors=white waveform.png
+ffmpeg -hide_banner -y -i input.mp3 -lavfi showwavespic=size=1080x400:colors=white:split_channels=1 waveform.png
+ffmpeg -hide_banner -y -i input.mp3 -lavfi aformat=channel_layouts=mono,showwavespic=size=1080x200:colors=white waveform.png
