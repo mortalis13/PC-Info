@@ -55,6 +55,9 @@ fm -hide_banner -y -i "input.mp4" -vf subtitles=subs.srt:force_style='FontName=A
 -- convert image and audio to video
 fm -hide_banner -y -loop 1 -i "input.png" -i "input.mp3" -c:a copy -c:v libx264 -tune stillimage -pix_fmt yuv420p -shortest output.mp4
 
+-- generate video with audio and black screen
+fm -hide_banner -y -f lavfi -i color=c=black:s=1280x720:r=5 -i "input.mp3" -crf 0 -c:a copy -shortest output.mp4
+
 -- advanced conversion params
 fm -hide_banner -y -i "input.mkv" -c:v libx264 -crf 24 -refs 7 -bf 7 -me_range 24 -me_method umh -subq 9 -map 0 -c:a copy "output.mkv"
 
