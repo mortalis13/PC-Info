@@ -18,7 +18,7 @@ fm -hide_banner -y -ss 00:10:28 -i "input.mkv" -c copy "output.mkv"
 -- cut first n time
 fm -hide_banner -y -t 00:00:10 -i "input.mkv" -c copy "output.mkv"
 
--- cut from time with duration (end position with -to didn't work)
+-- cut from time with duration (end position with -to doesn't work)
 fm -hide_banner -y -ss 00:00:00 -t 00:10:13 -i "input.mp4" -c copy "output.mp4"
 
 -- cut video with re-encoding (when keyframes don't let to cut exact seconds.milliseconds)

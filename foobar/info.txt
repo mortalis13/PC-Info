@@ -21,3 +21,15 @@ $code = @'
 '@
 Add-Type -MemberDefinition $code -Namespace WinAPI -Name Explorer 
 [WinAPI.Explorer]::Refresh()
+
+
+It seems that in some cases the icons associations can break.  
+(for example, after installing another media player, or installing/uninstalling the non-portable version of foobar)  
+In such weird cases, this guide may be followed to allow the program to build the associations:  
+https://www.reddit.com/r/foobar2000/comments/14avgvq/how_to_make_foobar2000_portable_with_shell
+
+Basically, as was tested, the "foobar2000 Shell Associations Updater.exe" is needed in the program folder.  
+Then, when removing/renaming the "portable_mode_enabled" and opening the program, it uses that executable to assign the correct associations.  
+(Supposing that the "icons" folder is also in the same program folder)
+
+Then, if icons still don't show, assigning foobar as default media player may help (in Settings -> Apps or in the properties of an audio file)
