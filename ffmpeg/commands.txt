@@ -1,10 +1,10 @@
 [Video]
 ==================
 -- convert video
-fm -hide_banner -i "input.mkv" -c:v libx264 -crf 26 -force_key_frames source -map 0 -c:a copy "output.mp4"
+fm -hide_banner -y -i "input.mkv" -c:v libx264 -crf 26 -force_key_frames source -map 0 -c:a copy "output.mp4"
 
 -- deinterlace
-fm -hide_banner -i "input.mkv" -vf yadif=0:0:0 -c:a copy "output.mp4"
+fm -hide_banner -y -i "input.mkv" -vf yadif=0:0:0 -c:a copy "output.mp4"
 
 -- 0.5 size
 fm -hide_banner -y -i "input.mkv" -vf scale=iw*.5:ih*.5 -c:v libx264 -crf 26 -c:a copy "output.mp4"
@@ -64,6 +64,9 @@ fm -hide_banner -y -i "input.mkv" -c:v libx264 -crf 24 -refs 7 -bf 7 -me_range 2
 -- extract all frames as images
 fm -hide_banner -y -i "input.mp4" "output_%04d.png"
 
+-- adjust volume
+fm -hide_banner -y -i "input.mp4" -map 0 -filter:a "volume=20dB" -c:a aac -b:a 192k -c:v copy "output.mp4"
+
 
 [Audio]
 ==================
@@ -88,19 +91,19 @@ fm -hide_banner -y -i "stereo.mp3" -i "stereo.mp3" -filter_complex "[0:a][1:a]am
 fm -hide_banner -y -i "input.mp3" -af "pan=stereo|c0<c0+c2|c1<c1+c3,volume=2.0" -c:a libmp3lame -b:a 320k -ar 44100 "output.mp3"
 
 -- split 5.1 audio to separate files
-ffmpeg -i "input.ac3" -filter_complex "channelsplit=channel_layout=5.1[FL][FR][FC][LFE][BL][BR]" -c:a libmp3lame -b:a 128k -map "[FL]" out_front_left.mp3 -map "[FR]" out_front_right.mp3 -map "[FC]" out_front_center.mp3 -map "[LFE]" out_lfe.mp3 -map "[BL]" out_back_left.mp3 -map "[BR]" out_back_right.mp3
+fm -hide_banner -y -i "input.ac3" -filter_complex "channelsplit=channel_layout=5.1[FL][FR][FC][LFE][BL][BR]" -c:a libmp3lame -b:a 128k -map "[FL]" out_front_left.mp3 -map "[FR]" out_front_right.mp3 -map "[FC]" out_front_center.mp3 -map "[LFE]" out_lfe.mp3 -map "[BL]" out_back_left.mp3 -map "[BR]" out_back_right.mp3
 
 -- stream sine wave
-ffmpeg -re -f lavfi -i aevalsrc="sin(400*2*PI*t)" -ar 8000 -f mulaw -f rtp rtp://127.0.0.1:1234
+fm -hide_banner -y -re -f lavfi -i aevalsrc="sin(400*2*PI*t)" -ar 8000 -f mulaw -f rtp rtp://127.0.0.1:1234
 
 -- stream file
-ffmpeg -re -i audio.mp3 -c copy -f rtp rtp://127.0.0.1:1234
+fm -hide_banner -y -re -i audio.mp3 -c copy -f rtp rtp://127.0.0.1:1234
 ffplay rtp://127.0.0.1:1234
 
 -- create raw PCM file
-ffmpeg -i input.mp3 -f s16le -c:a pcm_s16le output.raw
+fm -hide_banner -y -i input.mp3 -f s16le -c:a pcm_s16le output.raw
 
 -- get waveform
-ffmpeg -hide_banner -y -i input.mp3 -lavfi showwavespic=size=1080x200:colors=white waveform.png
-ffmpeg -hide_banner -y -i input.mp3 -lavfi showwavespic=size=1080x400:colors=white:split_channels=1 waveform.png
-ffmpeg -hide_banner -y -i input.mp3 -lavfi aformat=channel_layouts=mono,showwavespic=size=1080x200:colors=white waveform.png
+fm -hide_banner -y -i input.mp3 -lavfi showwavespic=size=1080x200:colors=white waveform.png
+fm -hide_banner -y -i input.mp3 -lavfi showwavespic=size=1080x400:colors=white:split_channels=1 waveform.png
+fm -hide_banner -y -i input.mp3 -lavfi aformat=channel_layouts=mono,showwavespic=size=1080x200:colors=white waveform.png
