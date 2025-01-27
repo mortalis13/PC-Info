@@ -1,0 +1,1 @@
+to apply these fixes create the file in the profile folder chrome/userChrome.css and insert the code from the respective CSS file.
