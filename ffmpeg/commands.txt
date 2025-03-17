@@ -110,3 +110,11 @@ fm -hide_banner -y -i input.mp3 -f s16le -c:a pcm_s16le output.raw
 fm -hide_banner -y -i input.mp3 -lavfi showwavespic=size=1080x200:colors=white waveform.png
 fm -hide_banner -y -i input.mp3 -lavfi showwavespic=size=1080x400:colors=white:split_channels=1 waveform.png
 fm -hide_banner -y -i input.mp3 -lavfi aformat=channel_layouts=mono,showwavespic=size=1080x200:colors=white waveform.png
+
+
+[Other]
+-- print metadata
+ffprobe -v quiet -print_format json -show_format -show_streams "input.mp4"
+
+-- change stream language metadata
+fm -hide_banner -y -i "input.mp4" -map 0 -metadata:s:v:0 language=und -codec copy "output.mp4"
