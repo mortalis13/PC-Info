@@ -34,7 +34,7 @@ fm -hide_banner -y -i "input.mp4" -i "audio.mp3" -map 0 -map 1 -c copy "output.m
 -- shift audio
 fm -hide_banner -y -i "input.mp4" -itsoffset 0.17 -i "input.mp4" -map 0:v -map 1:a -c copy "output.mp4"
 
--- extract video and an audio stream
+-- extract specific streams
 fm -hide_banner -y -i "input.mp4" -map 0:0 -map 0:4 -c copy "output.mp4"
 
 -- normalize audio
@@ -70,6 +70,12 @@ fm -hide_banner -y -i "input.mp4" "output_%04d.png"
 -- adjust volume
 fm -hide_banner -y -i "input.mp4" -map 0 -filter:a "volume=20dB" -c:a aac -b:a 192k -c:v copy "output.mp4"
 
+-- change stream language metadata
+fm -hide_banner -y -i "input.mp4" -map 0 -metadata:s:v:0 language=und -c copy "output.mp4"
+
+-- Fix for error on "Timestamps are unset"
+fm -hide_banner -y -fflags +genpts -i "input.mkv" -map 0:1 -map -0:2 -c copy "output.mkv"
+
 
 [Audio]
 ==================
@@ -80,7 +86,7 @@ fm -hide_banner -y -i "input.flac" -c:a libmp3lame -b:a 320k -ar 44100 -map_meta
 fm -hide_banner -y -i "input.wav" -filter:a "volume=1.5" -c:a libmp3lame -b:a 320k -ar 44100 -map_metadata 0 -id3v2_version 3 "output.wav"
 
 -- concat audio files
-fm -hide_banner -y -i concat:"input1.mp3|input2.mp3" -codec copy "output.mp3"
+fm -hide_banner -y -i concat:"input1.mp3|input2.mp3" -c copy "output.mp3"
 
 -- merge stereo and mono (mix 0-left+1 -> 0-left and 0-right+1 -> 0-right)
 fm -hide_banner -y -i "stereo.mp3" -i "mono.mp3" -filter_complex "[0:a][1:a]amerge=inputs=2[a]" -map "[a]" -ac 2 -c:a libmp3lame -b:a 320k -ar 44100 "output.mp3"
@@ -115,6 +121,3 @@ fm -hide_banner -y -i input.mp3 -lavfi aformat=channel_layouts=mono,showwavespic
 [Other]
 -- print metadata
 ffprobe -v quiet -print_format json -show_format -show_streams "input.mp4"
-
--- change stream language metadata
-fm -hide_banner -y -i "input.mp4" -map 0 -metadata:s:v:0 language=und -codec copy "output.mp4"
