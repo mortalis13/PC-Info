@@ -13,16 +13,16 @@ fm -hide_banner -y -i "input.mkv" -vf scale=iw*.5:ih*.5 -c:v libx264 -crf 26 -c:
 fm -hide_banner -y -i "input.mkv" -vf scale=1280:-1 -c:v libx264 -crf 26 -c:a copy "output.mp4"
 
 -- cut from time to end
-fm -hide_banner -y -ss 00:10:28 -i "input.mkv" -c copy "output.mkv"
+fm -hide_banner -y -ss 00:10:28 -i "input.mkv" -map 0 -c copy "output.mkv"
 
 -- cut first n time
-fm -hide_banner -y -t 00:00:10 -i "input.mkv" -c copy "output.mkv"
+fm -hide_banner -y -t 00:00:10 -i "input.mkv" -map 0 -c copy "output.mkv"
 
 -- cut from time with duration (end position with -to doesn't work)
-fm -hide_banner -y -ss 00:00:00 -t 00:10:13 -i "input.mp4" -c copy "output.mp4"
+fm -hide_banner -y -ss 00:00:00 -t 00:10:13 -i "input.mp4" -map 0 -c copy "output.mp4"
 
 -- cut video with re-encoding (when keyframes don't let to cut exact seconds.milliseconds)
-fm -hide_banner -y -ss 3.600 -i "input.mp4" -t 00:02:25 -c:v libx264 -crf 30 -c:a copy "output.mp4"
+fm -hide_banner -y -ss 3.600 -i "input.mp4" -t 00:02:25 -map 0 -c:v libx264 -crf 30 -c:a copy "output.mp4"
 
 -- extract audio
 fm -hide_banner -y -i "input.mp4" -c:a libmp3lame -b:a 128k "output.mp3"
@@ -36,6 +36,9 @@ fm -hide_banner -y -i "input.mp4" -itsoffset 0.17 -i "input.mp4" -map 0:v -map 1
 
 -- extract specific streams
 fm -hide_banner -y -i "input.mp4" -map 0:0 -map 0:4 -c copy "output.mp4"
+
+-- extract subtitles
+ffmpeg -i "input.mp4" -map 0:s:0 "output.srt"
 
 -- normalize audio
 fm -hide_banner -y -i "input.mp4" -map 0 -filter:a loudnorm -c:a libmp3lame -b:a 128k -c:v copy "output.mp4"
@@ -121,3 +124,6 @@ fm -hide_banner -y -i input.mp3 -lavfi aformat=channel_layouts=mono,showwavespic
 [Other]
 -- print metadata
 ffprobe -v quiet -print_format json -show_format -show_streams "input.mp4"
+
+-- play with embedded default subtitles and amplified volume
+ffplay -vf subtitles=filename=input.mkv -af "volume=5" input.mkv
