@@ -76,8 +76,11 @@ fm -hide_banner -y -i "input.mp4" -map 0 -filter:a "volume=20dB" -c:a aac -b:a 1
 -- change stream language metadata
 fm -hide_banner -y -i "input.mp4" -map 0 -metadata:s:v:0 language=und -c copy "output.mp4"
 
--- Fix for error on "Timestamps are unset"
+-- fix for error on "Timestamps are unset"
 fm -hide_banner -y -fflags +genpts -i "input.mkv" -map 0:1 -map -0:2 -c copy "output.mkv"
+
+-- combine videos (list.txt with files like "file '01.mp4'")
+fm -hide_banner -y -f concat -i list.txt -c:v libx264 -crf 20 -c:a copy "output.mp4"
 
 
 [Audio]
