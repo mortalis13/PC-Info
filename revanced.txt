@@ -1,0 +1,8 @@
+General -> Customer filter:
+channel_action_button
+more_drawer
+subscribe_button
+video_subtitle
+
+Player:
+Hide Cast button
