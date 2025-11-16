@@ -1,0 +1,18 @@
+Setup Termux for Python:
+- install Termux: https://termux.dev, https://github.com/termux/termux-app/releases
+- pkg install python
+- pkg up && pkg rei libexpat (to fix missing libexpat.so for pip)
+- termux-setup-storage (to allow access to sdcard)
+- cd /sdcard
+- python script.py
+
+Fix storage permission after update:
+- disable files permission for the app
+- termux-setup-storage
+- allow permission from the dialog
+- cd /sdcard
+
+Clipboard support:
+- install Temux:API: https://github.com/termux/termux-api/releases
+- pkg install termux-api
+- termux-clipboard-get
